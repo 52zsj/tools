@@ -116,7 +116,7 @@ class RandomBuild
                 $pool = $numberStr . $lowerLetterStr . $upLetterStr;
                 break;
         }
-        return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
+        return substr(str_shuffle(str_repeat($pool, intval(ceil($len / strlen($pool))))), 0, $len);
     }
 
     /**
