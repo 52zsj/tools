@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace aj\tools;
 
-declare(strict_types=1);
 
 /**
  * 随机字符串
