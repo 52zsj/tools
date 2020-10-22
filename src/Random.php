@@ -81,7 +81,7 @@ class RandomBuild
      * @param int $len 长度
      * @return string
      */
-    public function numeric($len = 4: string
+    public function numeric($len = 4): string
     {
         return $this->build('numeric', $len);
     }
