@@ -1,6 +1,8 @@
 {
     "name": "aj/tools",
     "type": "library",
+    "description": "傲杰笔记",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "傲杰笔记",
