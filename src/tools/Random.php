@@ -8,7 +8,13 @@ declare(strict_types=1);
  * 随机字符串
  * Class Random
  * @package aj\tools
- * @method string alnum(int $len = 6):string static 生成len位数的数字和字母
+ * @method string mixing(int $len = 6):string static 生成len位数的数字和字母
+ * @method string character(int $len = 6):string static 生成len位数字母
+ * @method string lower(int $len = 6):string static 生成len位数的小写字母
+ * @method string upper(int $len = 6):string static 生成len位数的大写字母
+ * @method string numeric(int $len = 6):string static 生成len位数的数字
+ * @method string uuid():string static 生成UUID
+ * @method string getuuid(bool $type):string static 生成UUID 根据类型 type 是否移除-分隔符
  */
 class Random
 {
