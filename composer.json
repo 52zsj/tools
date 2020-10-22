@@ -1,5 +1,5 @@
 {
-    "name": "ajbj/aj_tools",
+    "name": "ajbj/tools",
     "type": "library",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "autoload":{
         "psr-4":{
-            "ajbj\\":"src/"
+            "aj\\":"src/"
         }
     }
 }
