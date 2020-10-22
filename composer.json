@@ -1,0 +1,11 @@
+{
+    "name": "aj/aj_tools",
+    "type": "library",
+    "authors": [
+        {
+            "name": "傲杰笔记",
+            "email": "1095143545@qq.com"
+        }
+    ],
+    "require": {}
+}
