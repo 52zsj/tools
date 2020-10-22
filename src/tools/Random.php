@@ -1,6 +1,6 @@
 <?php
 
-namespace aj\tools;
+namespace ajbj\tools;
 
 declare(strict_types=1);
 
