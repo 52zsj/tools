@@ -37,6 +37,11 @@ class RandomBuild
         return self::$instance;
     }
 
+    public function __call($name, $arguments)
+    {
+        echo 'method "' . $name . '" is not exist';
+    }
+
     /**
      * 生成数字和字母
      * @param int $len 长度
