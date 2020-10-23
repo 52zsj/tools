@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
     "name": "aj/tools",
-=======
-    "name": "ajbj/tools",
->>>>>>> main
     "type": "library",
     "description": "傲杰笔记",
     "license": "Apache-2.0",
