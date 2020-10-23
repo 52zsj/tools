@@ -1,8 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 .idea/
-<<<<<<< HEAD
-=======
 .htaccess
 nginx.htaccess
->>>>>>> main
