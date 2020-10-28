@@ -28,6 +28,7 @@ class Tree
     public $nbsp = "&nbsp;";
     public $pidname = 'pid';
     public $idname = 'id';
+    protected $childName = 'child';
 
     public function __construct($options = [])
     {
@@ -64,7 +65,7 @@ class Tree
      * @param string $nbsp 空格占位符
      * @return Tree
      */
-    public function init($arr = [], $pidname = null, $nbsp = null)
+    public function init($arr = [], $idname = null, $pidname = null, $childName = null, $nbsp = null)
     {
         $this->arr = $arr;
         if (!is_null($pidname)) {
@@ -72,6 +73,12 @@ class Tree
         }
         if (!is_null($nbsp)) {
             $this->nbsp = $nbsp;
+        }
+        if (!is_null($idname)) {
+            $this->idname = $idname;
+        }
+        if (!is_null($childName)) {
+            $this->childName = $childName;
         }
         return $this;
     }
@@ -81,7 +88,8 @@ class Tree
      * @param int
      * @return array
      */
-    public function getChild($myid)
+    public
+    function getChild($myid)
     {
         $newarr = [];
         foreach ($this->arr as $value) {
@@ -101,7 +109,8 @@ class Tree
      * @param boolean $withself 是否包含自身
      * @return array
      */
-    public function getChildren($myid, $withself = false)
+    public
+    function getChildren($myid, $withself = false)
     {
         $newarr = [];
         foreach ($this->arr as $value) {
@@ -124,7 +133,8 @@ class Tree
      * @param boolean $withself 是否包含自身
      * @return array
      */
-    public function getChildrenIds($myid, $withself = false)
+    public
+    function getChildrenIds($myid, $withself = false)
     {
         $childrenlist = $this->getChildren($myid, $withself);
         $childrenids = [];
@@ -139,7 +149,8 @@ class Tree
      * @param int
      * @return array
      */
-    public function getParent($myid)
+    public
+    function getParent($myid)
     {
         $pid = 0;
         $newarr = [];
@@ -169,7 +180,8 @@ class Tree
      * @param bool $withself 是否包含自己
      * @return array
      */
-    public function getParents($myid, $withself = false)
+    public
+    function getParents($myid, $withself = false)
     {
         $pid = 0;
         $newarr = [];
@@ -198,7 +210,8 @@ class Tree
      * @param boolean $withself
      * @return array
      */
-    public function getParentsIds($myid, $withself = false)
+    public
+    function getParentsIds($myid, $withself = false)
     {
         $parentlist = $this->getParents($myid, $withself);
         $parentsids = [];
@@ -218,7 +231,8 @@ class Tree
      * @param string $toptpl 顶级栏目的模板
      * @return string
      */
-    public function getTree($myid, $itemtpl = "<option value=@id @selected @disabled>@spacer@name</option>", $selectedids = '', $disabledids = '', $itemprefix = '', $toptpl = '')
+    public
+    function getTree($myid, $itemtpl = "<option value=@id @selected @disabled>@spacer@name</option>", $selectedids = '', $disabledids = '', $itemprefix = '', $toptpl = '')
     {
         $ret = '';
         $number = 1;
@@ -261,7 +275,8 @@ class Tree
      * @param string $wrapattr 子列表包裹属性
      * @return string
      */
-    public function getTreeUl($myid, $itemtpl, $selectedids = '', $disabledids = '', $wraptag = 'ul', $wrapattr = '')
+    public
+    function getTreeUl($myid, $itemtpl, $selectedids = '', $disabledids = '', $wraptag = 'ul', $wrapattr = '')
     {
         $str = '';
         $childs = $this->getChild($myid);
@@ -278,7 +293,7 @@ class Tree
                 $nstr = strtr($itemtpl, $value);
                 $childdata = $this->getTreeUl($id, $itemtpl, $selectedids, $disabledids, $wraptag, $wrapattr);
                 $childlist = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
-                $str .= strtr($nstr, array('@childlist' => $childlist));
+                $str .= strtr($nstr, array('@'.$this->childName => $childlist));
             }
         }
         return $str;
@@ -294,7 +309,8 @@ class Tree
      * @param string $itemprefix 前缀
      * @return string
      */
-    public function getTreeSpecial($myid, $itemtpl1, $itemtpl2, $selectedids = 0, $disabledids = 0, $itemprefix = '')
+    public
+    function getTreeSpecial($myid, $itemtpl1, $itemtpl2, $selectedids = 0, $disabledids = 0, $itemprefix = '')
     {
         $ret = '';
         $number = 1;
@@ -334,7 +350,8 @@ class Tree
      * @param string $itemprefix 前缀
      * @return array
      */
-    public function getTreeArray($myid, $itemprefix = '')
+    public
+    function getTreeArray($myid, $itemprefix = '')
     {
         $childs = $this->getChild($myid);
         $n = 0;
@@ -354,7 +371,7 @@ class Tree
                 $spacer = $itemprefix ? $itemprefix . $j : '';
                 $value['spacer'] = $spacer;
                 $data[$n] = $value;
-                $data[$n]['childlist'] = $this->getTreeArray($id, $itemprefix . $k . $this->nbsp);
+                $data[$n][$this->childName] = $this->getTreeArray($id, $itemprefix . $k . $this->nbsp);
                 $n++;
                 $number++;
             }
@@ -368,12 +385,13 @@ class Tree
      * @param string $field
      * @return array
      */
-    public function getTreeList($data = [], $field = 'name')
+    public
+    function getTreeList($data = [], $field = 'name')
     {
         $arr = [];
         foreach ($data as $k => $v) {
-            $childlist = isset($v['childlist']) ? $v['childlist'] : [];
-            unset($v['childlist']);
+            $childlist = isset($v[$this->childName]) ? $v[$this->childName] : [];
+            unset($v[$this->childName]);
             $v[$field] = $v['spacer'] . ' ' . $v[$field];
             $v['haschild'] = $childlist ? 1 : 0;
             if ($v[$this->idname]) {
